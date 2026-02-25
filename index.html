@@ -1,65 +1,471 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Моя презентация</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя Презентация | 21.02.26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --dark: #1e1b4b;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1e1b4b 50%, #312e81 100%);
+            min-height: 100vh;
+            color: var(--light);
+            padding: 40px 20px;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideDown 1s ease;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .header .date {
+            font-size: 1.2em;
+            color: #a5b4fc;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 10px 30px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        /* Download Section */
+        .download-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .download-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            color: #a5b4fc;
+            text-align: center;
+        }
+
+        .download-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            background: var(--gradient);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
+        }
+
+        .download-btn::before {
+            content: '📥';
+            font-size: 1.3em;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-left: 5px solid #6366f1;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .quote-section h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #a5b4fc;
+        }
+
+        .quote-text {
+            font-size: 1.15em;
+            line-height: 2;
+            color: #e0e7ff;
+            text-align: justify;
+        }
+
+        .quote-text strong {
+            color: #34d399;
+            font-weight: 700;
+        }
+
+        .quote-author {
+            text-align: right;
+            margin-top: 20px;
+            color: #a5b4fc;
+            font-style: italic;
+        }
+
+        /* Puzzles Section */
+        .puzzles-section {
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .puzzles-section h2 {
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 35px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .puzzle-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .puzzle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .puzzle-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .puzzle-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .puzzle-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5em;
+            color: white;
+            margin-right: 15px;
+        }
+
+        .puzzle-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: white;
+        }
+
+        .equation-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .equation {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3em;
+            color: #34d399;
+            letter-spacing: 2px;
+            line-height: 1.8;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: #064e3b;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .status-badge::before {
+            content: '✓ ';
+        }
+
+        /* Summary */
+        .summary-section {
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .summary-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #a5b4fc;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #a5b4fc;
+            margin-top: 10px;
+            font-size: 0.95em;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #a5b4fc;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .puzzle-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .download-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Моя Презентация</h1>
+            <div class="date">📅 21 Февраля 2026</div>
+        </div>
 
-    <p>
-        Нажмите, чтобы скачать или открыть презентацию:
-        <a href="СетьВводный.pptx">Презентация в формате .pptx</a>
-        Нажмите, чтобы скачать или открыть index.html:
-        <a href="index.html">Файл проверки работы с кириллицей .html</a>
-    </p>
-    <p>
-     21.02.26   
-        У каждого поколения есть свой философ, писатель или художник, который захватывает и воплощает в себе идею времени. Иногда эти философы получают признание при жизни, но чаще всего им приходится ждать, пока на них наложит свой отпечаток время. Независимо от того, будет ли это признание немедленным или запоздалым, эпоха отмечена этими людьми, выражающими свои идеалы в шепоте стихов или в грохоте политического движения. У нашего поколения есть философ. Он не художник и не писатель. Он программист
-    </p>
-<p>
-1
-	
-ВОЛК + ЛИСА = ЗВЕРИ
-	
-5392+
-	
-9684=
-	
-15076
-	
-✅
-2
-	
-КТО + КОТ = ТОК
-	
-495+
-	
-459=
-	
-954
-	
-✅
-3
-	
-КОШКА × 3 = СОБАКА
-	
-56350
-	
-×3
-	
-169050
-	
-✅
-4
-	
-2×СИНУС + КОСИНУС = ТАНГЕНС
-	
-58725+
-	
-3958725=
-	
-4076175
-	
-✅
-</p>
+        <!-- Download Section -->
+        <div class="download-section">
+            <h2>📥 Скачать Материалы</h2>
+            <div class="download-links">
+                <a href="СетьВводный.pptx" class="download-btn">Презентация .pptx</a>
+                <a href="index.html" class="download-btn">Проверка Кириллицы .html</a>
+            </div>
+        </div>
+
+        <!-- Quote Section -->
+        <div class="quote-section">
+            <h2>💭 Философия Поколения</h2>
+            <div class="quote-text">
+                <p>У каждого поколения есть свой философ, писатель или художник, который захватывает и воплощает в себе идею времени. Иногда эти философы получают признание при жизни, но чаще всего им приходится ждать, пока на них наложит свой отпечаток время.</p>
+                <br>
+                <p>Независимо от того, будет ли это признание немедленным или запоздалым, эпоха отмечена этими людьми, выражающими свои идеалы в шепоте стихов или в грохоте политического движения.</p>
+                <br>
+                <p><strong>У нашего поколения есть философ. Он не художник и не писатель. Он программист.</strong></p>
+            </div>
+            <div class="quote-author">— Манифест Поколения Кодеров</div>
+        </div>
+
+        <!-- Puzzles Section -->
+        <div class="puzzles-section">
+            <h2>🧩 Криптоарифметические Головоломки</h2>
+            
+            <div class="puzzle-grid">
+                <!-- Puzzle 1 -->
+                <div class="puzzle-card">
+                    <div class="puzzle-header">
+                        <div class="puzzle-number">1</div>
+                        <div class="puzzle-title">ВОЛК + ЛИСА = ЗВЕРИ</div>
+                    </div>
+                    <div class="equation-box">
+                        <div class="equation">
+                            <div>5392 + 9684 = 15076</div>
+                        </div>
+                    </div>
+                    <div class="status-badge">Решено</div>
+                </div>
+
+                <!-- Puzzle 2 -->
+                <div class="puzzle-card">
+                    <div class="puzzle-header">
+                        <div class="puzzle-number">2</div>
+                        <div class="puzzle-title">КТО + КОТ = ТОК</div>
+                    </div>
+                    <div class="equation-box">
+                        <div class="equation">
+                            <div>495 + 459 = 954</div>
+                        </div>
+                    </div>
+                    <div class="status-badge">Решено</div>
+                </div>
+
+                <!-- Puzzle 3 -->
+                <div class="puzzle-card">
+                    <div class="puzzle-header">
+                        <div class="puzzle-number">3</div>
+                        <div class="puzzle-title">КОШКА × 3 = СОБАКА</div>
+                    </div>
+                    <div class="equation-box">
+                        <div class="equation">
+                            <div>56350 × 3 = 169050</div>
+                        </div>
+                    </div>
+                    <div class="status-badge">Решено</div>
+                </div>
+
+                <!-- Puzzle 4 -->
+                <div class="puzzle-card">
+                    <div class="puzzle-header">
+                        <div class="puzzle-number">4</div>
+                        <div class="puzzle-title">2×СИНУС + КОСИНУС = ТАНГЕНС</div>
+                    </div>
+                    <div class="equation-box">
+                        <div class="equation">
+                            <div>2×58725 + 3958725 = 4076175</div>
+                        </div>
+                    </div>
+                    <div class="status-badge">Решено</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2>📊 Итоговая Статистика</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Всего головоломок</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Решено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Не решено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Успешность</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>🏆 Все головоломки успешно расшифрованы!</p>
+            <p style="margin-top: 15px;">Создано с помощью Python | 21.02.26</p>
+        </div>
+    </div>
 </body>
 </html>
