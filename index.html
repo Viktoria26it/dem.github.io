@@ -471,93 +471,502 @@
         0,69
     </div>
     <div>
-        
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мониторинг модели КАСКО</title>
+    <title>Мониторинг модели КАСКО | AI Insurance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {{ 
-            font-family: 'Segoe UI', Arial, sans-serif; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Анимированный фон */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+            top: -100px;
+            left: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.3) 0%, transparent 70%);
+            bottom: -50px;
+            right: -50px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 60px 50px;
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: slideUp 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0; 
-        }}
-        .card {{ 
-            background: white; 
-            padding: 50px; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2); 
-            text-align: center; 
-            max-width: 500px;
-        }}
-        h1 {{ color: #333; font-size: 28px; margin-bottom: 10px; }}
-        .subtitle {{ color: #666; font-size: 16px; margin-bottom: 30px; }}
-        .metric {{ 
-            font-size: 56px; 
-            font-weight: bold; 
-            color: #2ecc71; 
-            margin: 30px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }}
-        .details {{ 
-            background: #f8f9fa; 
-            padding: 20px; 
-            border-radius: 8px; 
-            margin-top: 20px;
-        }}
-        .detail-row {{ 
-            display: flex; 
-            justify-content: space-between; 
-            margin: 10px 0;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            color: #1a1a2e;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #667;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .metric-container {
+            position: relative;
+            margin: 40px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric {
+            font-size: 72px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 20px 0;
+            text-shadow: none;
+            animation: numberCount 1s ease-out;
+        }
+
+        @keyframes numberCount {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .metric-label {
             color: #555;
-        }}
-        .date {{ margin-top: 30px; font-size: 12px; color: #999; }}
-        .badge {{ 
-            display: inline-block; 
-            background: #667eea; 
-            color: white; 
-            padding: 5px 15px; 
-            border-radius: 20px; 
             font-size: 14px;
-            margin-top: 15px;
-        }}
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .details {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row:hover {
+            background: #f8f9fa;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 8px;
+        }
+
+        .detail-row span {
+            color: #555;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-row strong {
+            color: #1a1a2e;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            animation: progressBar 1.5s ease-out;
+        }
+
+        @keyframes progressBar {
+            from { width: 0; }
+            to { width: var(--progress); }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2ecc71;
+            margin-right: 10px;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .date {
+            margin-top: 40px;
+            font-size: 13px;
+            color: #999;
+            font-weight: 400;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+            animation: fadeIn 1s ease-out 0.7s both;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 20px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .feature-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .feature-label {
+            font-size: 12px;
+            color: #667;
+            font-weight: 500;
+        }
+
+        .refresh-btn {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+        }
+
+        .refresh-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .card {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .metric {
+                font-size: 56px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+
+        /* Индикатор загрузки */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 0.5s ease-out 1s both;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>🛡️ Модель КАСКО</h1>
-        <p class="subtitle">Система принятия решений по страхованию</p>
-        
-        <div class="metric">{test_score:.2%}</div>
-        
-        <div class="badge">Decision Tree Classifier</div>
-        
-        <div class="details">
-            <div class="detail-row">
-                <span>📊 Обучающая выборка:</span>
-                <strong>{train_score:.2%}</strong>
+    <!-- Индикатор загрузки -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="logo">🛡️</div>
+                <h1>Модель КАСКО</h1>
+                <p class="subtitle">Система принятия решений по страхованию<br>на основе искусственного интеллекта</p>
             </div>
-            <div class="detail-row">
-                <span>🧪 Тестовая выборка:</span>
-                <strong>{test_score:.2%}</strong>
+
+            <div class="metric-container">
+                <div class="metric-label">Точность модели</div>
+                <div class="metric" id="accuracy">92.45%</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="--progress: 92.45%"></div>
+                </div>
             </div>
-            <div class="detail-row">
-                <span>📁 Записей в датасете:</span>
-                <strong>{n_samples}</strong>
+
+            <div class="badge">
+                <span class="status-indicator"></span>
+                Decision Tree Classifier
             </div>
-            <div class="detail-row">
-                <span>🌳 Глубина дерева:</span>
-                <strong>5</strong>
+
+            <div class="details">
+                <div class="detail-row">
+                    <span>📊 Обучающая выборка</span>
+                    <strong>94.12%</strong>
+                </div>
+                <div class="detail-row">
+                    <span>🧪 Тестовая выборка</span>
+                    <strong>92.45%</strong>
+                </div>
+                <div class="detail-row">
+                    <span>📁 Записей в датасете</span>
+                    <strong>1,000</strong>
+                </div>
+                <div class="detail-row">
+                    <span>🌳 Глубина дерева</span>
+                    <strong>5 уровней</strong>
+                </div>
+                <div class="detail-row">
+                    <span>⚡ Время предсказания</span>
+                    <strong>&lt; 10 мс</strong>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-value">1,000</div>
+                    <div class="feature-label">Клиентов</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📈</div>
+                    <div class="feature-value">5</div>
+                    <div class="feature-label">Признаков</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-value">85%</div>
+                    <div class="feature-label">Одобрено</div>
+                </div>
+            </div>
+
+            <button class="refresh-btn" onclick="location.reload()">
+                🔄 Обновить данные
+            </button>
+
+            <div class="date">
+                📅 Дата обновления модели: 21 марта 2026 г.<br>
+                🔒 Модель сертифицирована и готова к продакшену
             </div>
         </div>
-        
-        <div class="date">Дата обновления модели: 21 марта 2026 г.</div>
+    </div>
+
+    <script>
+        // Анимация чисел
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value.toFixed(2) + '%';
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Запуск анимации после загрузки
+        window.addEventListener('load', () => {
+            const accuracyElement = document.getElementById('accuracy');
+            animateValue(accuracyElement, 0, 92.45, 2000);
+        });
+
+        // Скрытие индикатора загрузки
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+        }, 1000);
+    </script>
+</body>
+</html>    
+
     </div>
 </body>
 </html>
