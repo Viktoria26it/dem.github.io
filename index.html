@@ -971,7 +971,318 @@
 </body>
 </html>
 """
+<dv>
+    #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Система управления данными приемного покоя
+Эмуляция многомерных массивов MUMPS (InterSystems Cache/IRIS)
+"""
 
+import sys
+from typing import Dict, List, Any, Optional
+from dataclasses import dataclass, field
+
+
+@dataclass
+class MumpsNode:
+    """Узел многомерного массива (глобала)"""
+    value: Any = None
+    children: Dict[str, 'MumpsNode'] = field(default_factory=dict)
+    
+    def set_value(self, val: Any) -> None:
+        """Установить значение узла"""
+        self.value = val
+    
+    def add_child(self, key: str, node: 'MumpsNode') -> None:
+        """Добавить дочерний узел"""
+        self.children[key] = node
+    
+    def get_child(self, key: str) -> Optional['MumpsNode']:
+        """Получить дочерний узел по ключу"""
+        return self.children.get(key)
+    
+    def has_children(self) -> bool:
+        """Проверить наличие дочерних узлов"""
+        return len(self.children) > 0
+
+
+class MumpsGlobal:
+    """Класс для работы с многомерным массивом (глобалом)"""
+    
+    def __init__(self, name: str = "^a"):
+        self.name = name
+        self.root = MumpsNode()
+    
+    def set(self, phone: str, **kwargs) -> None:
+        """
+        Установить данные пациента
+        
+        Пример:
+            db.set("+79161234501", 
+                   name="Иванов П.С.", 
+                   city="Москва", 
+                   street="ул. Ленина, д. 15",
+                   age=45,
+                   complaint="Высокая температура")
+        """
+        # Создаем узел для телефона, если нет
+        if phone not in self.root.children:
+            self.root.children[phone] = MumpsNode()
+        patient_node = self.root.children[phone]
+        
+        # Устанавливаем простые значения
+        if 'name' in kwargs:
+            if 'name' not in patient_node.children:
+                patient_node.children['name'] = MumpsNode()
+            patient_node.children['name'].set_value(kwargs['name'])
+        
+        # Обрабатываем город и улицу (вложенная структура)
+        if 'city' in kwargs:
+            if 'city' not in patient_node.children:
+                patient_node.children['city'] = MumpsNode()
+            city_node = patient_node.children['city']
+            city_node.set_value(kwargs['city'])
+            
+            # Если есть улица, добавляем как дочерний элемент города
+            if 'street' in kwargs:
+                if 'street' not in city_node.children:
+                    city_node.children['street'] = MumpsNode()
+                city_node.children['street'].set_value(kwargs['street'])
+        
+        # Возраст
+        if 'age' in kwargs:
+            if 'age' not in patient_node.children:
+                patient_node.children['age'] = MumpsNode()
+            patient_node.children['age'].set_value(kwargs['age'])
+        
+        # Жалоба
+        if 'complaint' in kwargs:
+            if 'complaint' not in patient_node.children:
+                patient_node.children['complaint'] = MumpsNode()
+            patient_node.children['complaint'].set_value(kwargs['complaint'])
+    
+    def print_tree(self) -> None:
+        """Красиво вывести структуру дерева"""
+        print(f"\n{'='*70}")
+        print(f"БАЗА ДАННЫХ ПРИЕМНОГО ПОКОЯ")
+        print(f"{'='*70}\n")
+        print(f"{self.name}")
+        
+        phones = list(self.root.children.keys())
+        for i, phone in enumerate(phones):
+            is_last_phone = (i == len(phones) - 1)
+            self._print_node(phone, self.root.children[phone], "", is_last_phone)
+        
+        print(f"\n{'='*70}")
+        print(f"Всего пациентов: {len(phones)}")
+        print(f"{'='*70}\n")
+    
+    def _print_node(self, key: str, node: MumpsNode, prefix: str, is_last: bool) -> None:
+        """Рекурсивная печать узла"""
+        # Выбираем символы для ветвления
+        connector = "└── " if is_last else "├── "
+        
+        # Формируем строку с ключом и значением
+        value_str = f" = {node.value}" if node.value is not None else ""
+        print(f"{prefix}{connector}\"{key}\"{value_str}")
+        
+        # Подготовка префикса для дочерних элементов
+        new_prefix = prefix + ("    " if is_last else "│   ")
+        
+        # Получаем список дочерних узлов
+        children_keys = list(node.children.keys())
+        
+        # Рекурсивно печатаем дочерние узлы
+        for i, child_key in enumerate(children_keys):
+            child_node = node.children[child_key]
+            is_last_child = (i == len(children_keys) - 1)
+            self._print_node(child_key, child_node, new_prefix, is_last_child)
+    
+    def get_patient(self, phone: str) -> Optional[Dict[str, Any]]:
+        """Получить данные пациента в виде словаря"""
+        if phone not in self.root.children:
+            return None
+        
+        patient_node = self.root.children[phone]
+        data = {"phone": phone}
+        
+        # Извлекаем все поля
+        for key, node in patient_node.children.items():
+            if key == "city":
+                data["city"] = node.value
+                if "street" in node.children:
+                    data["street"] = node.children["street"].value
+            else:
+                data[key] = node.value
+        
+        return data
+
+
+def create_emergency_database() -> MumpsGlobal:
+    """Создать и заполнить базу данных приемного покоя"""
+    
+    db = MumpsGlobal("^a")
+    
+    # Данные пациентов
+    patients = [
+        {
+            "phone": "+79161234501",
+            "name": "Иванов Петр Сергеевич",
+            "city": "Москва",
+            "street": "ул. Ленина, д. 15",
+            "age": 45,
+            "complaint": "Высокая температура"
+        },
+        {
+            "phone": "+79161234502",
+            "name": "Петрова Анна Михайловна",
+            "city": "Москва",
+            "street": "пр. Мира, д. 28",
+            "age": 32,
+            "complaint": "Боль в животе"
+        },
+        {
+            "phone": "+79161234503",
+            "name": "Сидоров Алексей Владимирович",
+            "city": "Санкт-Петербург",
+            "street": "Невский пр., д. 100",
+            "age": 28,
+            "complaint": "Головная боль"
+        },
+        {
+            "phone": "+79161234504",
+            "name": "Козлова Мария Игоревна",
+            "city": "Москва",
+            "street": "ул. Тверская, д. 5",
+            "age": 56,
+            "complaint": "Давление"
+        },
+        {
+            "phone": "+79161234505",
+            "name": "Новиков Дмитрий Александрович",
+            "city": "Казань",
+            "street": "ул. Баумана, д. 42",
+            "age": 38,
+            "complaint": "Травма ноги"
+        },
+        {
+            "phone": "+79161234506",
+            "name": "Морозова Елена Павловна",
+            "city": "Москва",
+            "street": "Красная площадь, д. 1",
+            "age": 41,
+            "complaint": "Отравление"
+        },
+        {
+            "phone": "+79161234507",
+            "name": "Волков Сергей Николаевич",
+            "city": "Новосибирск",
+            "street": "пр. Карла Маркса, д. 18",
+            "age": 29,
+            "complaint": "Боль в горле"
+        },
+        {
+            "phone": "+79161234508",
+            "name": "Лебедева Ольга Дмитриевна",
+            "city": "Москва",
+            "street": "ул. Арбат, д. 10",
+            "age": 52,
+            "complaint": "Боль в сердце"
+        },
+        {
+            "phone": "+79161234509",
+            "name": "Кузнецов Андрей Викторович",
+            "city": "Екатеринбург",
+            "street": "ул. Ленина, д. 50",
+            "age": 35,
+            "complaint": "Перелом руки"
+        },
+        {
+            "phone": "+79161234510",
+            "name": "Попова Татьяна Сергеевна",
+            "city": "Москва",
+            "street": "Baker Street, д. 221b",
+            "age": 27,
+            "complaint": "Аллергия"
+        }
+    ]
+    
+    # Добавляем всех пациентов в базу
+    for patient in patients:
+        phone = patient.pop("phone")
+        db.set(phone, **patient)
+    
+    return db
+
+
+def demo_queries(db: MumpsGlobal) -> None:
+    """Демонстрация запросов к базе данных"""
+    
+    print("\n" + "="*70)
+    print("ПРИМЕРЫ ЗАПРОСОВ К БАЗЕ ДАННЫХ")
+    print("="*70 + "\n")
+    
+    # Пример 1: Получить данные конкретного пациента
+    print("📋 Запрос: Данные пациента +79161234501")
+    print("-"*70)
+    patient = db.get_patient("+79161234501")
+    if patient:
+        for key, value in patient.items():
+            print(f"  {key:12} : {value}")
+    
+    print("\n" + "-"*70)
+    
+    # Пример 2: Найти всех пациентов из Москвы
+    print("📋 Запрос: Все пациенты из Москвы")
+    print("-"*70)
+    moscow_patients = []
+    for phone in db.root.children.keys():
+        data = db.get_patient(phone)
+        if data and data.get("city") == "Москва":
+            moscow_patients.append(data)
+    
+    for p in moscow_patients:
+        print(f"  • {p['name']} ({p['age']} лет) - {p['complaint']}")
+    
+    print("\n" + "="*70 + "\n")
+
+
+def main():
+    """Основная функция"""
+    
+    # Настройка кодировки для Windows
+    if sys.platform == "win32":
+        sys.stdout.reconfigure(encoding='utf-8')
+    
+    print("\n" + "█"*70)
+    print("█" + " "*68 + "█")
+    print("█" + " СИСТЕМА УПРАВЛЕНИЯ ДАННЫМИ ПРИЕМНОГО ПОКОЯ".center(68) + "█")
+    print("█" + " Эмуляция многомерных массивов MUMPS".center(68) + "█")
+    print("█" + " "*68 + "█")
+    print("█"*70)
+    
+    # Создаем базу данных
+    print("\n⏳ Генерация базы данных...")
+    database = create_emergency_database()
+    print("✅ База данных успешно создана!\n")
+    
+    # Выводим структуру дерева
+    database.print_tree()
+    
+    # Демонстрация запросов
+    demo_queries(database)
+    
+    # Дополнительная информация
+    print("💡 Подсказка:")
+    print("   - Используйте db.get_patient(phone) для получения данных")
+    print("   - Используйте db.set(phone, ...) для добавления пациента")
+    print("   - Структура поддерживает вложенность любой глубины\n")
+
+
+if __name__ == "__main__":
+    main()
+</dv>
 
 
     
