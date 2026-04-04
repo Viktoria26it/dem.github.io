@@ -1283,6 +1283,270 @@ def main():
 if __name__ == "__main__":
     main()
 </dv>
+<div>
+  <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Медицинская система - Модель данных</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🏥 Медицинская информационная система</h1>
+            <p class="subtitle">Модель данных: Хирург - Пациент - Операция - Лекарство</p>
+        </div>
+    </header>
 
+    <main class="container">
+        <section class="diagram-section">
+            <h2>📊 Диаграмма модели данных</h2>
+            <div class="diagram-container">
+                <img src="Диаграмма.drawio.png" alt="Модель данных медицинской системы" class="diagram-image">
+            </div>
+        </section>
+
+        <section class="entities-section">
+            <h2>📋 Описание сущностей</h2>
+            
+            <div class="entity-card surgeon">
+                <h3>👨‍⚕️ Хирург</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
+                    <li><strong>Специализация:</strong> Профиль врача</li>
+                    <li><strong>Телефон:</strong> Контактный номер</li>
+                </ul>
+            </div>
+
+            <div class="entity-card patient">
+                <h3>🤕 Пациент</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
+                    <li><strong>Дата рождения:</strong> Возраст пациента</li>
+                    <li><strong>Группа крови:</strong> A(II) Rh+ ⭐</li>
+                    <li><strong>Диагноз:</strong> Медицинский диагноз</li>
+                </ul>
+            </div>
+
+            <div class="entity-card surgery">
+                <h3>🔪 Операция</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>Дата:</strong> Дата проведения</li>
+                    <li><strong>Тип:</strong> Вид операции</li>
+                    <li><strong>Длительность:</strong> Время проведения</li>
+                    <li><strong>Статус:</strong> Результат операции</li>
+                </ul>
+            </div>
+
+            <div class="entity-card medicine">
+                <h3>💊 Лекарство</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>Название:</strong> Наименование препарата</li>
+                    <li><strong>Дозировка:</strong> Доза применения</li>
+                    <li><strong>Форма:</strong> Форма выпуска</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="relationships-section">
+            <h2>🔗 Связи между сущностями</h2>
+            <div class="relationship-grid">
+                <div class="relationship-item">
+                    <span class="relation-icon">👨‍⚕️→🔪</span>
+                    <p><strong>Хирург проводит Операцию</strong><br>
+                    <em>1:N (один хирург - много операций)</em></p>
+                </div>
+                <div class="relationship-item">
+                    <span class="relation-icon">🤕→</span>
+                    <p><strong>Пациент участвует в Операции</strong><br>
+                    <em>1:N (один пациент - много операций)</em></p>
+                </div>
+                <div class="relationship-item">
+                    <span class="relation-icon">🔪→</span>
+                    <p><strong>Операция использует Лекарство</strong><br>
+                    <em>N:M (много лекарств на операцию)</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="data-example">
+            <h2>💡 Пример данных</h2>
+            <div class="example-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Сущность</th>
+                            <th>Пример данных</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>👨‍⚕️ Хирург</td>
+                            <td>Ковалев И.П., Нейрохирург, +79991112233</td>
+                        </tr>
+                        <tr>
+                            <td>🤕 Пациент</td>
+                            <td>Смирнов А.А., 45 лет, A(II) Rh+, Грыжа</td>
+                        </tr>
+                        <tr>
+                            <td>🔪 Операция</td>
+                            <td>Лапароскопия, 04.04.2026, 2 часа, Успешно</td>
+                        </tr>
+                        <tr>
+                            <td>💊 Лекарство</td>
+                            <td>Дротаверин, 40 мг, Ампулы</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Медицинская информационная система. Модель данных.</p>
+            <p>Создано с помощью draw.io</p>
+        </div>
+    </footer>
+</body>
+</html>  <!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Медицинская система - Модель данных</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🏥 Медицинская информационная система</h1>
+            <p class="subtitle">Модель данных: Хирург - Пациент - Операция - Лекарство</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="diagram-section">
+            <h2>📊 Диаграмма модели данных</h2>
+            <div class="diagram-container">
+                <img src="Диаграмма.drawio.png" alt="Модель данных медицинской системы" class="diagram-image">
+            </div>
+        </section>
+
+        <section class="entities-section">
+            <h2>📋 Описание сущностей</h2>
+            
+            <div class="entity-card surgeon">
+                <h3>👨‍⚕️ Хирург</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
+                    <li><strong>Специализация:</strong> Профиль врача</li>
+                    <li><strong>Телефон:</strong> Контактный номер</li>
+                </ul>
+            </div>
+
+            <div class="entity-card patient">
+                <h3>🤕 Пациент</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
+                    <li><strong>Дата рождения:</strong> Возраст пациента</li>
+                    <li><strong>Группа крови:</strong> A(II) Rh+ ⭐</li>
+                    <li><strong>Диагноз:</strong> Медицинский диагноз</li>
+                </ul>
+            </div>
+
+            <div class="entity-card surgery">
+                <h3>🔪 Операция</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>Дата:</strong> Дата проведения</li>
+                    <li><strong>Тип:</strong> Вид операции</li>
+                    <li><strong>Длительность:</strong> Время проведения</li>
+                    <li><strong>Статус:</strong> Результат операции</li>
+                </ul>
+            </div>
+
+            <div class="entity-card medicine">
+                <h3>💊 Лекарство</h3>
+                <ul>
+                    <li><strong>ID:</strong> Уникальный идентификатор</li>
+                    <li><strong>Название:</strong> Наименование препарата</li>
+                    <li><strong>Дозировка:</strong> Доза применения</li>
+                    <li><strong>Форма:</strong> Форма выпуска</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="relationships-section">
+            <h2>🔗 Связи между сущностями</h2>
+            <div class="relationship-grid">
+                <div class="relationship-item">
+                    <span class="relation-icon">👨‍⚕️→🔪</span>
+                    <p><strong>Хирург проводит Операцию</strong><br>
+                    <em>1:N (один хирург - много операций)</em></p>
+                </div>
+                <div class="relationship-item">
+                    <span class="relation-icon">🤕→</span>
+                    <p><strong>Пациент участвует в Операции</strong><br>
+                    <em>1:N (один пациент - много операций)</em></p>
+                </div>
+                <div class="relationship-item">
+                    <span class="relation-icon">🔪→</span>
+                    <p><strong>Операция использует Лекарство</strong><br>
+                    <em>N:M (много лекарств на операцию)</em></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="data-example">
+            <h2>💡 Пример данных</h2>
+            <div class="example-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Сущность</th>
+                            <th>Пример данных</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>👨‍⚕️ Хирург</td>
+                            <td>Ковалев И.П., Нейрохирург, +79991112233</td>
+                        </tr>
+                        <tr>
+                            <td>🤕 Пациент</td>
+                            <td>Смирнов А.А., 45 лет, A(II) Rh+, Грыжа</td>
+                        </tr>
+                        <tr>
+                            <td>🔪 Операция</td>
+                            <td>Лапароскопия, 04.04.2026, 2 часа, Успешно</td>
+                        </tr>
+                        <tr>
+                            <td>💊 Лекарство</td>
+                            <td>Дротаверин, 40 мг, Ампулы</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Медицинская информационная система. Модель данных.</p>
+            <p>Создано с помощью draw.io</p>
+        </div>
+    </footer>
+</body>
+</html>
+</div>
 
     
