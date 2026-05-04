@@ -3,1557 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Презентация | 21.02.26</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>📊 Скачать таблицы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366f1;
-            --secondary: #8b5cf6;
-            --accent: #10b981;
-            --dark: #1e1b4b;
-            --light: #f8fafc;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1e1b4b 50%, #312e81 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             min-height: 100vh;
-            color: var(--light);
-            padding: 40px 20px;
-            line-height: 1.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 50px;
-            animation: slideDown 1s ease;
-        }
-
-        .header h1 {
-            font-size: 3em;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-        }
-
-        .header .date {
-            font-size: 1.2em;
-            color: #a5b4fc;
-            background: rgba(99, 102, 241, 0.1);
-            padding: 10px 30px;
-            border-radius: 30px;
-            display: inline-block;
-            border: 2px solid rgba(99, 102, 241, 0.3);
-        }
-
-        /* Download Section */
-        .download-section {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            backdrop-filter: blur(10px);
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .download-section h2 {
-            font-size: 1.8em;
-            margin-bottom: 25px;
-            color: #a5b4fc;
-            text-align: center;
-        }
-
-        .download-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .download-btn {
-            background: var(--gradient);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .download-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.6);
-        }
-
-        .download-btn::before {
-            content: '📥';
-            font-size: 1.3em;
-        }
-
-        /* Quote Section */
-        .quote-section {
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            border-left: 5px solid #6366f1;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .quote-section h2 {
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            color: #a5b4fc;
-        }
-
-        .quote-text {
-            font-size: 1.15em;
-            line-height: 2;
-            color: #e0e7ff;
-            text-align: justify;
-        }
-
-        .quote-text strong {
-            color: #34d399;
-            font-weight: 700;
-        }
-
-        .quote-author {
-            text-align: right;
-            margin-top: 20px;
-            color: #a5b4fc;
-            font-style: italic;
-        }
-
-        /* Puzzles Section */
-        .puzzles-section {
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .puzzles-section h2 {
-            font-size: 2.2em;
-            text-align: center;
-            margin-bottom: 35px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .puzzle-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .puzzle-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .puzzle-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient);
-        }
-
-        .puzzle-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
-            border-color: rgba(99, 102, 241, 0.5);
-        }
-
-        .puzzle-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .puzzle-number {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.5em;
-            color: white;
-            margin-right: 15px;
-        }
-
-        .puzzle-title {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: white;
-        }
-
-        .equation-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .equation {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.3em;
-            color: #34d399;
-            letter-spacing: 2px;
-            line-height: 1.8;
-        }
-
-        .status-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #10b981, #34d399);
-            color: #064e3b;
-            padding: 8px 25px;
-            border-radius: 20px;
-            font-weight: 700;
-            margin-top: 15px;
-        }
-
-        .status-badge::before {
-            content: '✓ ';
-        }
-
-        /* Summary */
-        .summary-section {
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            border: 2px solid rgba(99, 102, 241, 0.3);
-            animation: fadeInUp 1s ease 0.6s both;
-        }
-
-        .summary-section h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-            color: #a5b4fc;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-        }
-
-        .stat-card {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-        }
-
-        .stat-number {
-            font-size: 3em;
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: #a5b4fc;
-            margin-top: 10px;
-            font-size: 0.95em;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 30px;
-            color: #a5b4fc;
-            opacity: 0.7;
-        }
-
-        /* Animations */
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2em;
-            }
-
-            .puzzle-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .download-links {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>🎯 Моя Презентация</h1>
-            <div class="date">📅 21 Февраля 2026</div>
-        </div>
-
-        <!-- Download Section -->
-        <div class="download-section">
-            <h2>📥 Скачать Материалы</h2>
-            <div class="download-links">
-                <a href="СетьВводный.pptx" class="download-btn">Презентация .pptx</a>
-                <a href="index.html" class="download-btn">Проверка Кириллицы .html</a>
-            </div>
-        </div>
-
-        <!-- Quote Section -->
-        <div class="quote-section">
-            <h2>💭 Философия Поколения</h2>
-            <div class="quote-text">
-                <p>У каждого поколения есть свой философ, писатель или художник, который захватывает и воплощает в себе идею времени. Иногда эти философы получают признание при жизни, но чаще всего им приходится ждать, пока на них наложит свой отпечаток время.</p>
-                <br>
-                <p>Независимо от того, будет ли это признание немедленным или запоздалым, эпоха отмечена этими людьми, выражающими свои идеалы в шепоте стихов или в грохоте политического движения.</p>
-                <br>
-                <p><strong>У нашего поколения есть философ. Он не художник и не писатель. Он программист.</strong></p>
-            </div>
-            <div class="quote-author">— Манифест Поколения Кодеров</div>
-        </div>
-
-        <!-- Puzzles Section -->
-        <div class="puzzles-section">
-            <h2>🧩 Криптоарифметические Головоломки</h2>
-            
-            <div class="puzzle-grid">
-                <!-- Puzzle 1 -->
-                <div class="puzzle-card">
-                    <div class="puzzle-header">
-                        <div class="puzzle-number">1</div>
-                        <div class="puzzle-title">ВОЛК + ЛИСА = ЗВЕРИ</div>
-                    </div>
-                    <div class="equation-box">
-                        <div class="equation">
-                            <div>5392 + 9684 = 15076</div>
-                        </div>
-                    </div>
-                    <div class="status-badge">Решено</div>
-                </div>
-
-                <!-- Puzzle 2 -->
-                <div class="puzzle-card">
-                    <div class="puzzle-header">
-                        <div class="puzzle-number">2</div>
-                        <div class="puzzle-title">КТО + КОТ = ТОК</div>
-                    </div>
-                    <div class="equation-box">
-                        <div class="equation">
-                            <div>495 + 459 = 954</div>
-                        </div>
-                    </div>
-                    <div class="status-badge">Решено</div>
-                </div>
-
-                <!-- Puzzle 3 -->
-                <div class="puzzle-card">
-                    <div class="puzzle-header">
-                        <div class="puzzle-number">3</div>
-                        <div class="puzzle-title">КОШКА × 3 = СОБАКА</div>
-                    </div>
-                    <div class="equation-box">
-                        <div class="equation">
-                            <div>56350 × 3 = 169050</div>
-                        </div>
-                    </div>
-                    <div class="status-badge">Решено</div>
-                </div>
-
-                <!-- Puzzle 4 -->
-                <div class="puzzle-card">
-                    <div class="puzzle-header">
-                        <div class="puzzle-number">4</div>
-                        <div class="puzzle-title">2×СИНУС + КОСИНУС = ТАНГЕНС</div>
-                    </div>
-                    <div class="equation-box">
-                        <div class="equation">
-                            <div>2×58725 + 3958725 = 4076175</div>
-                        </div>
-                    </div>
-                    <div class="status-badge">Решено</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Summary Section -->
-        <div class="summary-section">
-            <h2>📊 Итоговая Статистика</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">Всего головоломок</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">4</div>
-                    <div class="stat-label">Решено</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">0</div>
-                    <div class="stat-label">Не решено</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">Успешность</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->    
-        <div class="footer">`
-            <p>🏆 Все головоломки успешно расшифрованы!</p>
-            <p style="margin-top: 15px;">Создано с помощью Python | 21.02.26</p>
-        </div>
-    </div>
-    <div>
-      0,69
-    </div>
-    <div>
-    <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мониторинг модели КАСКО | AI Insurance</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Анимированный фон */
-        body::before {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
-            top: -100px;
-            left: -100px;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        body::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(118, 75, 162, 0.3) 0%, transparent 70%);
-            bottom: -50px;
-            right: -50px;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
-            padding: 60px 50px;
             border-radius: 24px;
+            padding: 40px 35px;
             box-shadow: 
-                0 20px 60px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
-            text-align: center;
-            animation: slideUp 0.8s ease-out;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+                0 25px 80px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.6s ease-out;
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .header {
-            margin-bottom: 40px;
+            text-align: center;
+            margin-bottom: 35px;
         }
 
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 40px;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        h1 {
-            color: #1a1a2e;
-            font-size: 32px;
+        .header h1 {
+            font-size: 1.8em;
             font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
+            color: #1a1a2e;
+            margin-bottom: 8px;
         }
 
-        .subtitle {
-            color: #667;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 1.5;
+        .header p {
+            color: #666;
+            font-size: 0.95em;
         }
 
-        .metric-container {
-            position: relative;
-            margin: 40px 0;
-            padding: 40px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 20px;
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .metric {
-            font-size: 72px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 20px 0;
-            text-shadow: none;
-            animation: numberCount 1s ease-out;
-        }
-
-        @keyframes numberCount {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .metric-label {
-            color: #555;
-            font-size: 14px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 20px;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-            animation: fadeIn 1s ease-out 0.3s both;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .details {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 16px;
-            margin-top: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            animation: fadeIn 1s ease-out 0.5s both;
-        }
-
-        .detail-row {
+        .file-list {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .file-link {
+            display: flex;
             align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #f0f0f0;
+            gap: 15px;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 2px solid #e9ecef;
+            border-radius: 14px;
+            text-decoration: none;
+            color: #1a1a2e;
+            font-weight: 500;
             transition: all 0.3s ease;
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-row:hover {
-            background: #f8f9fa;
-            padding-left: 10px;
-            padding-right: 10px;
-            border-radius: 8px;
-        }
-
-        .detail-row span {
-            color: #555;
-            font-size: 15px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .detail-row strong {
-            color: #1a1a2e;
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 10px;
-            margin-top: 10px;
+            position: relative;
             overflow: hidden;
         }
 
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            animation: progressBar 1.5s ease-out;
-        }
-
-        @keyframes progressBar {
-            from { width: 0; }
-            to { width: var(--progress); }
-        }
-
-        .status-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #2ecc71;
-            margin-right: 10px;
-            animation: blink 2s ease-in-out infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .date {
-            margin-top: 40px;
-            font-size: 13px;
-            color: #999;
-            font-weight: 400;
-            padding-top: 20px;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 30px;
-            animation: fadeIn 1s ease-out 0.7s both;
-        }
-
-        .feature-item {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            padding: 20px 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .feature-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a2e;
-            margin-bottom: 5px;
-        }
-
-        .feature-label {
-            font-size: 12px;
-            color: #667;
-            font-weight: 500;
-        }
-
-        .refresh-btn {
-            margin-top: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-            animation: fadeIn 1s ease-out 0.9s both;
-        }
-
-        .refresh-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
-        }
-
-        .refresh-btn:active {
-            transform: translateY(-1px);
-        }
-
-        /* Адаптивность */
-        @media (max-width: 600px) {
-            .card {
-                padding: 40px 30px;
-            }
-
-            h1 {
-                font-size: 26px;
-            }
-
-            .metric {
-                font-size: 56px;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-            }
-
-            .detail-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-        }
-
-        /* Индикатор загрузки */
-        .loading {
-            position: fixed;
-            top: 0;
+        .file-link::before {
+            content: '';
+            position: absolute;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(26, 26, 46, 0.95);
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .file-link:hover {
+            transform: translateX(5px);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .file-link:hover::before {
+            opacity: 1;
+        }
+
+        .file-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            z-index: 1000;
-            animation: fadeOut 0.5s ease-out 1s both;
+            justify-content: center;
+            font-size: 1.3em;
+            flex-shrink: 0;
         }
 
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .file-icon.ods {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .file-icon.xlsx {
+            background: linear-gradient(135deg, #217346, #1e6a3f);
+            color: white;
         }
 
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
+        .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #1a1a2e;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-meta {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .file-action {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .file-link:hover .file-action {
+            transform: translateX(3px);
+            display: inline-block;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e9ecef;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 30px 25px; }
+            .header h1 { font-size: 1.5em; }
         }
     </style>
 </head>
 <body>
-    <!-- Индикатор загрузки -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-    </div>
-
     <div class="container">
         <div class="card">
             <div class="header">
-                <div class="logo">🛡️</div>
-                <h1>Модель КАСКО</h1>
-                <p class="subtitle">Система принятия решений по страхованию<br>на основе искусственного интеллекта</p>
+                <h1>📊 Материалы к занятию</h1>
+                <p>Таблицы и задания для работы</p>
+                <div class="badge">✨ 4 файла</div>
             </div>
 
-            <div class="metric-container">
-                <div class="metric-label">Точность модели</div>
-                <div class="metric" id="accuracy">92.45%</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="--progress: 92.45%"></div>
-                </div>
+            <div class="file-list">
+                <a href="таблица%201.ods" class="file-link" download>
+                    <div class="file-icon ods">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">таблица 1.ods</div>
+                        <div class="file-meta">LibreOffice Calc • ~12 KB</div>
+                    </div>
+                    <div class="file-action">Скачать →</div>
+                </a>
+
+                <a href="Таблица2.ods" class="file-link" download>
+                    <div class="file-icon ods">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">Таблица2.ods</div>
+                        <div class="file-meta">LibreOffice Calc • ~18 KB</div>
+                    </div>
+                    <div class="file-action">Скачать →</div>
+                </a>
+
+                <a href="таблица%203%20задание.xlsx" class="file-link" download>
+                    <div class="file-icon xlsx">📗</div>
+                    <div class="file-info">
+                        <div class="file-name">таблица 3 задание.xlsx</div>
+                        <div class="file-meta">Microsoft Excel • ~24 KB</div>
+                    </div>
+                    <div class="file-action">Скачать →</div>
+                </a>
+
+                <a href="таблица%204.ods" class="file-link" download>
+                    <div class="file-icon ods">📄</div>
+                    <div class="file-info">
+                        <div class="file-name">таблица 4.ods</div>
+                        <div class="file-meta">LibreOffice Calc • ~15 KB</div>
+                    </div>
+                    <div class="file-action">Скачать →</div>
+                </a>
             </div>
 
-            <div class="badge">
-                <span class="status-indicator"></span>
-                Decision Tree Classifier
-            </div>
-
-            <div class="details">
-                <div class="detail-row">
-                    <span>📊 Обучающая выборка</span>
-                    <strong>94.12%</strong>
-                </div>
-                <div class="detail-row">
-                    <span>🧪 Тестовая выборка</span>
-                    <strong>92.45%</strong>
-                </div>
-                <div class="detail-row">
-                    <span>📁 Записей в датасете</span>
-                    <strong>1,000</strong>
-                </div>
-                <div class="detail-row">
-                    <span>🌳 Глубина дерева</span>
-                    <strong>5 уровней</strong>
-                </div>
-                <div class="detail-row">
-                    <span>⚡ Время предсказания</span>
-                    <strong>&lt; 10 мс</strong>
-                </div>
-            </div>
-
-            <div class="features">
-                <div class="feature-item">
-                    <div class="feature-icon">👥</div>
-                    <div class="feature-value">1,000</div>
-                    <div class="feature-label">Клиентов</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">📈</div>
-                    <div class="feature-value">5</div>
-                    <div class="feature-label">Признаков</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">✅</div>
-                    <div class="feature-value">85%</div>
-                    <div class="feature-label">Одобрено</div>
-                </div>
-            </div>
-
-            <button class="refresh-btn" onclick="location.reload()">
-                🔄 Обновить данные
-            </button>
-
-            <div class="date">
-                📅 Дата обновления модели: 21 марта 2026 г.<br>
-                🔒 Модель сертифицирована и готова к продакшену
+            <div class="footer">
+                <p>💡 Нажмите на файл для скачивания</p>
+                <p style="margin-top: 8px; font-size: 0.85em;">Файлы совместимы с LibreOffice и Microsoft Excel</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Анимация чисел
-        function animateValue(element, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                const value = Math.floor(progress * (end - start) + start);
-                element.textContent = value.toFixed(2) + '%';
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Запуск анимации после загрузки
-        window.addEventListener('load', () => {
-            const accuracyElement = document.getElementById('accuracy');
-            animateValue(accuracyElement, 0, 92.45, 2000);
+        // Плавная анимация при наведении
+        document.querySelectorAll('.file-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.2s ease';
+            });
         });
 
-        // Скрытие индикатора загрузки
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-        }, 1000);
+        // Предупреждение если файл не найден
+        document.querySelectorAll('.file-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Можно добавить проверку существования файла
+                console.log('Скачивание:', this.href);
+            });
+        });
     </script>
 </body>
-</html>    
-
-    </div>
-</body>
 </html>
-"""
-<dv>
-    #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Система управления данными приемного покоя
-Эмуляция многомерных массивов MUMPS (InterSystems Cache/IRIS)
-"""
-
-import sys
-from typing import Dict, List, Any, Optional
-from dataclasses import dataclass, field
-
-
-@dataclass
-class MumpsNode:
-    """Узел многомерного массива (глобала)"""
-    value: Any = None
-    children: Dict[str, 'MumpsNode'] = field(default_factory=dict)
-    
-    def set_value(self, val: Any) -> None:
-        """Установить значение узла"""
-        self.value = val
-    
-    def add_child(self, key: str, node: 'MumpsNode') -> None:
-        """Добавить дочерний узел"""
-        self.children[key] = node
-    
-    def get_child(self, key: str) -> Optional['MumpsNode']:
-        """Получить дочерний узел по ключу"""
-        return self.children.get(key)
-    
-    def has_children(self) -> bool:
-        """Проверить наличие дочерних узлов"""
-        return len(self.children) > 0
-
-
-class MumpsGlobal:
-    """Класс для работы с многомерным массивом (глобалом)"""
-    
-    def __init__(self, name: str = "^a"):
-        self.name = name
-        self.root = MumpsNode()
-    
-    def set(self, phone: str, **kwargs) -> None:
-        """
-        Установить данные пациента
-        
-        Пример:
-            db.set("+79161234501", 
-                   name="Иванов П.С.", 
-                   city="Москва", 
-                   street="ул. Ленина, д. 15",
-                   age=45,
-                   complaint="Высокая температура")
-        """
-        # Создаем узел для телефона, если нет
-        if phone not in self.root.children:
-            self.root.children[phone] = MumpsNode()
-        patient_node = self.root.children[phone]
-        
-        # Устанавливаем простые значения
-        if 'name' in kwargs:
-            if 'name' not in patient_node.children:
-                patient_node.children['name'] = MumpsNode()
-            patient_node.children['name'].set_value(kwargs['name'])
-        
-        # Обрабатываем город и улицу (вложенная структура)
-        if 'city' in kwargs:
-            if 'city' not in patient_node.children:
-                patient_node.children['city'] = MumpsNode()
-            city_node = patient_node.children['city']
-            city_node.set_value(kwargs['city'])
-            
-            # Если есть улица, добавляем как дочерний элемент города
-            if 'street' in kwargs:
-                if 'street' not in city_node.children:
-                    city_node.children['street'] = MumpsNode()
-                city_node.children['street'].set_value(kwargs['street'])
-        
-        # Возраст
-        if 'age' in kwargs:
-            if 'age' not in patient_node.children:
-                patient_node.children['age'] = MumpsNode()
-            patient_node.children['age'].set_value(kwargs['age'])
-        
-        # Жалоба
-        if 'complaint' in kwargs:
-            if 'complaint' not in patient_node.children:
-                patient_node.children['complaint'] = MumpsNode()
-            patient_node.children['complaint'].set_value(kwargs['complaint'])
-    
-    def print_tree(self) -> None:
-        """Красиво вывести структуру дерева"""
-        print(f"\n{'='*70}")
-        print(f"БАЗА ДАННЫХ ПРИЕМНОГО ПОКОЯ")
-        print(f"{'='*70}\n")
-        print(f"{self.name}")
-        
-        phones = list(self.root.children.keys())
-        for i, phone in enumerate(phones):
-            is_last_phone = (i == len(phones) - 1)
-            self._print_node(phone, self.root.children[phone], "", is_last_phone)
-        
-        print(f"\n{'='*70}")
-        print(f"Всего пациентов: {len(phones)}")
-        print(f"{'='*70}\n")
-    
-    def _print_node(self, key: str, node: MumpsNode, prefix: str, is_last: bool) -> None:
-        """Рекурсивная печать узла"""
-        # Выбираем символы для ветвления
-        connector = "└── " if is_last else "├── "
-        
-        # Формируем строку с ключом и значением
-        value_str = f" = {node.value}" if node.value is not None else ""
-        print(f"{prefix}{connector}\"{key}\"{value_str}")
-        
-        # Подготовка префикса для дочерних элементов
-        new_prefix = prefix + ("    " if is_last else "│   ")
-        
-        # Получаем список дочерних узлов
-        children_keys = list(node.children.keys())
-        
-        # Рекурсивно печатаем дочерние узлы
-        for i, child_key in enumerate(children_keys):
-            child_node = node.children[child_key]
-            is_last_child = (i == len(children_keys) - 1)
-            self._print_node(child_key, child_node, new_prefix, is_last_child)
-    
-    def get_patient(self, phone: str) -> Optional[Dict[str, Any]]:
-        """Получить данные пациента в виде словаря"""
-        if phone not in self.root.children:
-            return None
-        
-        patient_node = self.root.children[phone]
-        data = {"phone": phone}
-        
-        # Извлекаем все поля
-        for key, node in patient_node.children.items():
-            if key == "city":
-                data["city"] = node.value
-                if "street" in node.children:
-                    data["street"] = node.children["street"].value
-            else:
-                data[key] = node.value
-        
-        return data
-
-
-def create_emergency_database() -> MumpsGlobal:
-    """Создать и заполнить базу данных приемного покоя"""
-    
-    db = MumpsGlobal("^a")
-    
-    # Данные пациентов
-    patients = [
-        {
-            "phone": "+79161234501",
-            "name": "Иванов Петр Сергеевич",
-            "city": "Москва",
-            "street": "ул. Ленина, д. 15",
-            "age": 45,
-            "complaint": "Высокая температура"
-        },
-        {
-            "phone": "+79161234502",
-            "name": "Петрова Анна Михайловна",
-            "city": "Москва",
-            "street": "пр. Мира, д. 28",
-            "age": 32,
-            "complaint": "Боль в животе"
-        },
-        {
-            "phone": "+79161234503",
-            "name": "Сидоров Алексей Владимирович",
-            "city": "Санкт-Петербург",
-            "street": "Невский пр., д. 100",
-            "age": 28,
-            "complaint": "Головная боль"
-        },
-        {
-            "phone": "+79161234504",
-            "name": "Козлова Мария Игоревна",
-            "city": "Москва",
-            "street": "ул. Тверская, д. 5",
-            "age": 56,
-            "complaint": "Давление"
-        },
-        {
-            "phone": "+79161234505",
-            "name": "Новиков Дмитрий Александрович",
-            "city": "Казань",
-            "street": "ул. Баумана, д. 42",
-            "age": 38,
-            "complaint": "Травма ноги"
-        },
-        {
-            "phone": "+79161234506",
-            "name": "Морозова Елена Павловна",
-            "city": "Москва",
-            "street": "Красная площадь, д. 1",
-            "age": 41,
-            "complaint": "Отравление"
-        },
-        {
-            "phone": "+79161234507",
-            "name": "Волков Сергей Николаевич",
-            "city": "Новосибирск",
-            "street": "пр. Карла Маркса, д. 18",
-            "age": 29,
-            "complaint": "Боль в горле"
-        },
-        {
-            "phone": "+79161234508",
-            "name": "Лебедева Ольга Дмитриевна",
-            "city": "Москва",
-            "street": "ул. Арбат, д. 10",
-            "age": 52,
-            "complaint": "Боль в сердце"
-        },
-        {
-            "phone": "+79161234509",
-            "name": "Кузнецов Андрей Викторович",
-            "city": "Екатеринбург",
-            "street": "ул. Ленина, д. 50",
-            "age": 35,
-            "complaint": "Перелом руки"
-        },
-        {
-            "phone": "+79161234510",
-            "name": "Попова Татьяна Сергеевна",
-            "city": "Москва",
-            "street": "Baker Street, д. 221b",
-            "age": 27,
-            "complaint": "Аллергия"
-        }
-    ]
-    
-    # Добавляем всех пациентов в базу
-    for patient in patients:
-        phone = patient.pop("phone")
-        db.set(phone, **patient)
-    
-    return db
-
-
-def demo_queries(db: MumpsGlobal) -> None:
-    """Демонстрация запросов к базе данных"""
-    
-    print("\n" + "="*70)
-    print("ПРИМЕРЫ ЗАПРОСОВ К БАЗЕ ДАННЫХ")
-    print("="*70 + "\n")
-    
-    # Пример 1: Получить данные конкретного пациента
-    print("📋 Запрос: Данные пациента +79161234501")
-    print("-"*70)
-    patient = db.get_patient("+79161234501")
-    if patient:
-        for key, value in patient.items():
-            print(f"  {key:12} : {value}")
-    
-    print("\n" + "-"*70)
-    
-    # Пример 2: Найти всех пациентов из Москвы
-    print("📋 Запрос: Все пациенты из Москвы")
-    print("-"*70)
-    moscow_patients = []
-    for phone in db.root.children.keys():
-        data = db.get_patient(phone)
-        if data and data.get("city") == "Москва":
-            moscow_patients.append(data)
-    
-    for p in moscow_patients:
-        print(f"  • {p['name']} ({p['age']} лет) - {p['complaint']}")
-    
-    print("\n" + "="*70 + "\n")
-
-
-def main():
-    """Основная функция"""
-    
-    # Настройка кодировки для Windows
-    if sys.platform == "win32":
-        sys.stdout.reconfigure(encoding='utf-8')
-    
-    print("\n" + "█"*70)
-    print("█" + " "*68 + "█")
-    print("█" + " СИСТЕМА УПРАВЛЕНИЯ ДАННЫМИ ПРИЕМНОГО ПОКОЯ".center(68) + "█")
-    print("█" + " Эмуляция многомерных массивов MUMPS".center(68) + "█")
-    print("█" + " "*68 + "█")
-    print("█"*70)
-    
-    # Создаем базу данных
-    print("\n⏳ Генерация базы данных...")
-    database = create_emergency_database()
-    print("✅ База данных успешно создана!\n")
-    
-    # Выводим структуру дерева
-    database.print_tree()
-    
-    # Демонстрация запросов
-    demo_queries(database)
-    
-    # Дополнительная информация
-    print("💡 Подсказка:")
-    print("   - Используйте db.get_patient(phone) для получения данных")
-    print("   - Используйте db.set(phone, ...) для добавления пациента")
-    print("   - Структура поддерживает вложенность любой глубины\n")
-
-
-if __name__ == "__main__":
-    main()
-</dv>
-<div>
-  <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Медицинская система - Модель данных</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>🏥 Медицинская информационная система</h1>
-            <p class="subtitle">Модель данных: Хирург - Пациент - Операция - Лекарство</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="diagram-section">
-            <h2>📊 Диаграмма модели данных</h2>
-            <div class="diagram-container">
-                <img src="Диаграмма.drawio.png" alt="Модель данных медицинской системы" class="diagram-image">
-            </div>
-        </section>
-
-        <section class="entities-section">
-            <h2>📋 Описание сущностей</h2>
-            
-            <div class="entity-card surgeon">
-                <h3>👨‍⚕️ Хирург</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
-                    <li><strong>Специализация:</strong> Профиль врача</li>
-                    <li><strong>Телефон:</strong> Контактный номер</li>
-                </ul>
-            </div>
-
-            <div class="entity-card patient">
-                <h3>🤕 Пациент</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
-                    <li><strong>Дата рождения:</strong> Возраст пациента</li>
-                    <li><strong>Группа крови:</strong> A(II) Rh+ ⭐</li>
-                    <li><strong>Диагноз:</strong> Медицинский диагноз</li>
-                </ul>
-            </div>
-
-            <div class="entity-card surgery">
-                <h3>🔪 Операция</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>Дата:</strong> Дата проведения</li>
-                    <li><strong>Тип:</strong> Вид операции</li>
-                    <li><strong>Длительность:</strong> Время проведения</li>
-                    <li><strong>Статус:</strong> Результат операции</li>
-                </ul>
-            </div>
-
-            <div class="entity-card medicine">
-                <h3>💊 Лекарство</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>Название:</strong> Наименование препарата</li>
-                    <li><strong>Дозировка:</strong> Доза применения</li>
-                    <li><strong>Форма:</strong> Форма выпуска</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="relationships-section">
-            <h2>🔗 Связи между сущностями</h2>
-            <div class="relationship-grid">
-                <div class="relationship-item">
-                    <span class="relation-icon">👨‍⚕️→🔪</span>
-                    <p><strong>Хирург проводит Операцию</strong><br>
-                    <em>1:N (один хирург - много операций)</em></p>
-                </div>
-                <div class="relationship-item">
-                    <span class="relation-icon">🤕→</span>
-                    <p><strong>Пациент участвует в Операции</strong><br>
-                    <em>1:N (один пациент - много операций)</em></p>
-                </div>
-                <div class="relationship-item">
-                    <span class="relation-icon">🔪→</span>
-                    <p><strong>Операция использует Лекарство</strong><br>
-                    <em>N:M (много лекарств на операцию)</em></p>
-                </div>
-            </div>
-        </section>
-
-        <section class="data-example">
-            <h2>💡 Пример данных</h2>
-            <div class="example-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Сущность</th>
-                            <th>Пример данных</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>👨‍⚕️ Хирург</td>
-                            <td>Ковалев И.П., Нейрохирург, +79991112233</td>
-                        </tr>
-                        <tr>
-                            <td>🤕 Пациент</td>
-                            <td>Смирнов А.А., 45 лет, A(II) Rh+, Грыжа</td>
-                        </tr>
-                        <tr>
-                            <td>🔪 Операция</td>
-                            <td>Лапароскопия, 04.04.2026, 2 часа, Успешно</td>
-                        </tr>
-                        <tr>
-                            <td>💊 Лекарство</td>
-                            <td>Дротаверин, 40 мг, Ампулы</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Медицинская информационная система. Модель данных.</p>
-            <p>Создано с помощью draw.io</p>
-        </div>
-    </footer>
-</body>
-</html>  <!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Медицинская система - Модель данных</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>🏥 Медицинская информационная система</h1>
-            <p class="subtitle">Модель данных: Хирург - Пациент - Операция - Лекарство</p>
-        </div>
-    </header>
-
-    <main class="container">
-        <section class="diagram-section">
-            <h2>📊 Диаграмма модели данных</h2>
-            <div class="diagram-container">
-                <img src="Диаграмма.drawio.png" alt="Модель данных медицинской системы" class="diagram-image">
-            </div>
-        </section>
-
-        <section class="entities-section">
-            <h2>📋 Описание сущностей</h2>
-            
-            <div class="entity-card surgeon">
-                <h3>👨‍⚕️ Хирург</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
-                    <li><strong>Специализация:</strong> Профиль врача</li>
-                    <li><strong>Телефон:</strong> Контактный номер</li>
-                </ul>
-            </div>
-
-            <div class="entity-card patient">
-                <h3>🤕 Пациент</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>ФИО:</strong> Фамилия Имя Отчество</li>
-                    <li><strong>Дата рождения:</strong> Возраст пациента</li>
-                    <li><strong>Группа крови:</strong> A(II) Rh+ ⭐</li>
-                    <li><strong>Диагноз:</strong> Медицинский диагноз</li>
-                </ul>
-            </div>
-
-            <div class="entity-card surgery">
-                <h3>🔪 Операция</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>Дата:</strong> Дата проведения</li>
-                    <li><strong>Тип:</strong> Вид операции</li>
-                    <li><strong>Длительность:</strong> Время проведения</li>
-                    <li><strong>Статус:</strong> Результат операции</li>
-                </ul>
-            </div>
-
-            <div class="entity-card medicine">
-                <h3>💊 Лекарство</h3>
-                <ul>
-                    <li><strong>ID:</strong> Уникальный идентификатор</li>
-                    <li><strong>Название:</strong> Наименование препарата</li>
-                    <li><strong>Дозировка:</strong> Доза применения</li>
-                    <li><strong>Форма:</strong> Форма выпуска</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="relationships-section">
-            <h2>🔗 Связи между сущностями</h2>
-            <div class="relationship-grid">
-                <div class="relationship-item">
-                    <span class="relation-icon">👨‍⚕️→🔪</span>
-                    <p><strong>Хирург проводит Операцию</strong><br>
-                    <em>1:N (один хирург - много операций)</em></p>
-                </div>
-                <div class="relationship-item">
-                    <span class="relation-icon">🤕→</span>
-                    <p><strong>Пациент участвует в Операции</strong><br>
-                    <em>1:N (один пациент - много операций)</em></p>
-                </div>
-                <div class="relationship-item">
-                    <span class="relation-icon">🔪→</span>
-                    <p><strong>Операция использует Лекарство</strong><br>
-                    <em>N:M (много лекарств на операцию)</em></p>
-                </div>
-            </div>
-        </section>
-
-        <section class="data-example">
-            <h2>💡 Пример данных</h2>
-            <div class="example-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Сущность</th>
-                            <th>Пример данных</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>👨‍⚕️ Хирург</td>
-                            <td>Ковалев И.П., Нейрохирург, +79991112233</td>
-                        </tr>
-                        <tr>
-                            <td>🤕 Пациент</td>
-                            <td>Смирнов А.А., 45 лет, A(II) Rh+, Грыжа</td>
-                        </tr>
-                        <tr>
-                            <td>🔪 Операция</td>
-                            <td>Лапароскопия, 04.04.2026, 2 часа, Успешно</td>
-                        </tr>
-                        <tr>
-                            <td>💊 Лекарство</td>
-                            <td>Дротаверин, 40 мг, Ампулы</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Медицинская информационная система. Модель данных.</p>
-            <p>Создано с помощью draw.io</p>
-        </div>
-    </footer>
-</body>
-</html>
-
-<div>
-    <a href="таблица 1.ods"
-        < a href="Таблица2.ods"
-        < a href=" таблица 3 задание.xlsx"
-        < a href=" таблица 4.ods"
-</div>
-</div>
 
     
