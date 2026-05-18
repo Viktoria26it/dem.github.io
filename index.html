@@ -599,6 +599,114 @@
             observer.observe(el);
         });
     </script>
+    <dib>
+        from flask import Flask, render_template, request, jsonify, session
+import random
+
+app = Flask(__name__)
+app.secret_key = 'change_this_to_a_random_secret_in_production'  # 🔐 Замените на случайную строку!
+
+def reset_game_state():
+    """Сбрасывает состояние игры в сессии."""
+    session.update({
+        'low': None,
+        'high': None,
+        'questions': 0,
+        'guessed': False,
+        'result': None
+    })
+
+@app.route('/')
+def index():
+    """Главная страница — загружает интерфейс."""
+    reset_game_state()
+    return render_template('index.html')
+
+@app.route('/start', methods=['POST'])
+def start_game():
+    """Инициализирует игру с заданным диапазоном."""
+    data = request.get_json()
+    try:
+        n = int(data['n'])
+        m = int(data['m'])
+        if n >= m:
+            return jsonify({'error': 'N должно быть меньше M'}), 400
+        session.update({
+            'low': n,
+            'high': m,
+            'questions': 0,
+            'guessed': False,
+            'result': None
+        })
+        return jsonify({
+            'message': f'Загадайте число от {n} до {m}.',
+            'low': n,
+            'high': m
+        })
+    except (ValueError, KeyError):
+        return jsonify({'error': 'Введите корректные целые числа'}), 400
+
+@app.route('/ask', methods=['POST'])
+def ask_question():
+    """Основная логика бинарного поиска."""
+    low = session.get('low')
+    high = session.get('high')
+    
+    if low is None or high is None or session.get('guessed'):
+        return jsonify({'error': 'Игра не начата или уже завершена'}), 400
+
+    if low == high:
+        session['guessed'] = True
+        session['result'] = low
+        return jsonify({
+            'done': True,
+            'number': low,
+            'questions': session['questions'],
+            'message': 'Я угадал!'
+        })
+
+    mid = (low + high) // 2
+    session['questions'] += 1
+    
+    data = request.get_json()
+    answer = data.get('answer', '').strip().lower()
+    
+    if answer in ('да', 'y', 'yes', '1', 'д', 'true'):
+        low = mid + 1
+    elif answer in ('нет', 'n', 'no', '0', 'н', 'false'):
+        high = mid
+    else:
+        return jsonify({'error': 'Ответьте "да" или "нет"'}), 400
+
+    session['low'] = low
+    session['high'] = high
+
+    if low == high:
+        session['guessed'] = True
+        session['result'] = low
+        return jsonify({
+            'done': True,
+            'number': low,
+            'questions': session['questions'],
+            'message': 'Я угадал!'
+        })
+
+    return jsonify({
+        'done': False,
+        'question': f'Ваше число больше {mid}?',
+        'questions': session['questions'],
+        'range': f'{low}–{high}'
+    })
+
+@app.route('/reset', methods=['POST'])
+def reset():
+    """Перезапускает игру."""
+    reset_game_state()
+    return jsonify({'status': 'ok'})
+
+if __name__ == '__main__':
+    app.run(debug=True)  # 🔥 Для продакшена используйте: gunicorn app:app
+    </dib>
 </body>
 </html>
 
