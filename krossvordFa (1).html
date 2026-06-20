@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кроссворд: Фармакология</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .content {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .crossword-section {
+            flex: 1;
+            min-width: 400px;
+        }
+
+        .questions-section {
+            flex: 1;
+            min-width: 350px;
+        }
+
+        .crossword-grid {
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+
+        .crossword-row {
+            display: flex;
+            margin-bottom: 2px;
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: white;
+        }
+
+        .cell.empty {
+            border: none;
+            background: transparent;
+        }
+
+        .cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            outline: none;
+            background: transparent;
+        }
+
+        .cell input:focus {
+            background: #e3f2fd;
+        }
+
+        .cell input.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .cell input.incorrect {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .cell .number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 10px;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .questions-list {
+            list-style: none;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: border-color 0.3s;
+        }
+
+        .question-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .question-input.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+        }
+
+        .question-input.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-check {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-check:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-show {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-show:hover {
+            background: #0b7dda;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .btn-clear {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background: #e68900;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        .result-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .result-message.success {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .result-message.error {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+
+            .cell {
+                width: 30px;
+                height: 30px;
+            }
+
+            .cell input {
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💊 Кроссворд: Фармакология</h1>
+        
+        <div class="content">
+            <div class="crossword-section">
+                <div class="crossword-grid" id="crosswordGrid"></div>
+            </div>
+            
+            <div class="questions-section">
+                <h2 style="color: #667eea; margin-bottom: 20px;">Вопросы:</h2>
+                <ul class="questions-list" id="questionsList"></ul>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn-check" onclick="checkAnswers()">✓ Проверить</button>
+            <button class="btn-show" onclick="showAnswers()">👁 Показать ответы</button>
+            <button class="btn-clear" onclick="clearAll()">🗑 Очистить</button>
+        </div>
+
+        <div class="result-message" id="resultMessage"></div>
+    </div>
+
+    <script>
+        // Данные кроссворда
+        const words = [
+            { word: 'АНАЛЬГИН', clue: 'Обезболивающее и жаропонижающее средство из группы пиразолонов', id: 1 },
+            { word: 'АСПИРИН', clue: 'Жаропонижающее, противовоспалительное и антиагрегантное средство', id: 2 },
+            { word: 'ВАЛИДОЛ', clue: 'Сосудорасширяющее средство, применяемое при стенокардии', id: 3 },
+            { word: 'ИНСУЛИН', clue: 'Гормон поджелудочной железы, снижающий уровень сахара в крови', id: 4 },
+            { word: 'ПАРАЦЕТАМОЛ', clue: 'Популярное жаропонижающее и обезболивающее средство', id: 5 }
+        ];
+
+        // Структура кроссворда (координаты и направления)
+        const crosswordStructure = [
+            { word: 'АНАЛЬГИН', row: 2, col: 1, direction: 'horizontal', id: 1 },
+            { word: 'АСПИРИН', row: 0, col: 1, direction: 'vertical', id: 2 },
+            { word: 'ВАЛИДОЛ', row: 4, col: 0, direction: 'horizontal', id: 3 },
+            { word: 'ИНСУЛИН', row: 1, col: 4, direction: 'vertical', id: 4 },
+            { word: 'ПАРАЦЕТАМОЛ', row: 6, col: 2, direction: 'horizontal', id: 5 }
+        ];
+
+        let grid = [];
+        const GRID_SIZE = 12;
+
+        // Инициализация сетки
+        function initializeGrid() {
+            grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
+            
+            crosswordStructure.forEach(item => {
+                const { word, row, col, direction } = item;
+                for (let i = 0; i < word.length; i++) {
+                    if (direction === 'horizontal') {
+                        grid[row][col + i] = word[i];
+                    } else {
+                        grid[row + i][col] = word[i];
+                    }
+                }
+            });
+        }
+
+        // Создание HTML сетки
+        function createGridHTML() {
+            const gridContainer = document.getElementById('crosswordGrid');
+            gridContainer.innerHTML = '';
+
+            for (let row = 0; row < GRID_SIZE; row++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'crossword-row';
+
+                for (let col = 0; col < GRID_SIZE; col++) {
+                    const cellDiv = document.createElement('div');
+                    cellDiv.className = 'cell';
+
+                    if (grid[row][col] !== null) {
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.maxLength = 1;
+                        input.dataset.row = row;
+                        input.dataset.col = col;
+                        input.dataset.correct = grid[row][col];
+                        
+                        input.addEventListener('input', function(e) {
+                            this.value = this.value.toUpperCase();
+                            if (this.value) {
+                                moveToNextInput(this);
+                            }
+                        });
+
+                        input.addEventListener('keydown', function(e) {
+                            if (e.key === 'Backspace' && !this.value) {
+                                moveToPrevInput(this);
+                            }
+                        });
+
+                        cellDiv.appendChild(input);
+
+                        // Добавление номера слова
+                        const wordStart = crosswordStructure.find(w => 
+                            w.row === row && w.col === col
+                        );
+                        if (wordStart) {
+                            const numberSpan = document.createElement('span');
+                            numberSpan.className = 'number';
+                            numberSpan.textContent = wordStart.id;
+                            cellDiv.appendChild(numberSpan);
+                        }
+                    } else {
+                        cellDiv.classList.add('empty');
+                    }
+
+                    rowDiv.appendChild(cellDiv);
+                }
+
+                gridContainer.appendChild(rowDiv);
+            }
+        }
+
+        // Создание списка вопросов
+        function createQuestionsList() {
+            const list = document.getElementById('questionsList');
+            list.innerHTML = '';
+
+            words.forEach(word => {
+                const li = document.createElement('li');
+                li.className = 'question-item';
+                
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.textContent = `${word.id}. ${word.clue}`;
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'question-input';
+                input.placeholder = `Ответ (${word.word.length} букв)`;
+                input.dataset.wordId = word.id;
+                input.dataset.correct = word.word;
+                
+                li.appendChild(questionText);
+                li.appendChild(input);
+                list.appendChild(li);
+            });
+        }
+
+        // Переход к следующему полю ввода
+        function moveToNextInput(currentInput) {
+            const allInputs = Array.from(document.querySelectorAll('.cell input'));
+            const currentIndex = allInputs.indexOf(currentInput);
+            if (currentIndex < allInputs.length - 1) {
+                allInputs[currentIndex + 1].focus();
+            }
+        }
+
+        // Переход к предыдущему полю ввода
+        function moveToPrevInput(currentInput) {
+            const allInputs = Array.from(document.querySelectorAll('.cell input'));
+            const currentIndex = allInputs.indexOf(currentInput);
+            if (currentIndex > 0) {
+                allInputs[currentIndex - 1].focus();
+            }
+        }
+
+        // Проверка ответов
+        function checkAnswers() {
+            let allCorrect = true;
+            
+            // Проверка полей в сетке
+            document.querySelectorAll('.cell input').forEach(input => {
+                const userAnswer = input.value.toUpperCase();
+                const correctAnswer = input.dataset.correct;
+                
+                input.classList.remove('correct', 'incorrect');
+                
+                if (userAnswer === '') {
+                    allCorrect = false;
+                } else if (userAnswer === correctAnswer) {
+                    input.classList.add('correct');
+                } else {
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            // Проверка ответов в списке вопросов
+            document.querySelectorAll('.question-input').forEach(input => {
+                const userAnswer = input.value.toUpperCase();
+                const correctAnswer = input.dataset.correct;
+                
+                input.classList.remove('correct', 'incorrect');
+                
+                if (userAnswer === '') {
+                    allCorrect = false;
+                } else if (userAnswer === correctAnswer) {
+                    input.classList.add('correct');
+                } else {
+                    input.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            // Отображение результата
+            const resultMessage = document.getElementById('resultMessage');
+            resultMessage.classList.remove('success', 'error');
+            
+            if (allCorrect) {
+                resultMessage.textContent = '🎉 Поздравляем! Все ответы верны!';
+                resultMessage.classList.add('success');
+            } else {
+                resultMessage.textContent = '❌ Есть ошибки. Попробуйте еще раз!';
+                resultMessage.classList.add('error');
+            }
+        }
+
+        // Показать ответы
+        function showAnswers() {
+            // Заполнить сетку
+            document.querySelectorAll('.cell input').forEach(input => {
+                input.value = input.dataset.correct;
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+
+            // Заполнить список вопросов
+            document.querySelectorAll('.question-input').forEach(input => {
+                input.value = input.dataset.correct;
+                input.classList.remove('incorrect');
+                input.classList.add('correct');
+            });
+
+            const resultMessage = document.getElementById('resultMessage');
+            resultMessage.textContent = '💡 Ответы показаны';
+            resultMessage.classList.remove('error');
+            resultMessage.classList.add('success');
+        }
+
+        // Очистить все
+        function clearAll() {
+            document.querySelectorAll('.cell input').forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+
+            document.querySelectorAll('.question-input').forEach(input => {
+                input.value = '';
+                input.classList.remove('correct', 'incorrect');
+            });
+
+            const resultMessage = document.getElementById('resultMessage');
+            resultMessage.classList.remove('success', 'error');
+            resultMessage.style.display = 'none';
+        }
+
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            initializeGrid();
+            createGridHTML();
+            createQuestionsList();
+        };
+    </script>
+</body>
+</html>
